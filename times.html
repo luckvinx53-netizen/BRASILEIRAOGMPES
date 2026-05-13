@@ -3,47 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Times - Brasileirão Betano</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Times</title>
+
+  <style>
+    body{
+      margin:0;
+      background:#001845;
+      color:white;
+      font-family:Arial, sans-serif;
+      padding-bottom:80px;
+    }
+
+    h1{
+      text-align:center;
+      margin:30px 0;
+      font-size:42px;
+    }
+
+    .times-grid{
+      width:90%;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+      gap:20px;
+    }
+
+    .time-card{
+      background:#0d2b5c;
+      border-radius:20px;
+      padding:20px;
+      text-align:center;
+      box-shadow:0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .time-card h2{
+      font-size:20px;
+      margin:0 0 10px;
+    }
+
+    .time-card p{
+      margin:5px 0;
+      opacity:.85;
+    }
+
+    .nav-bottom{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      background:#061b3f;
+      display:flex;
+      justify-content:space-around;
+      padding:12px 0;
+    }
+
+    .nav-bottom a{
+      color:white;
+      text-decoration:none;
+      font-size:14px;
+      opacity:.8;
+    }
+
+    .nav-bottom a.active{
+      color:#4da3ff;
+      font-weight:bold;
+      opacity:1;
+    }
+  </style>
 </head>
+
 <body>
-  <main class="app">
-    
-<header class="topbar">
-  <div class="logo">⚽</div>
-  <div>
-    <h1>Brasileirão Betano</h1>
-    <p>App oficial do campeonato</p>
+
+  <h1>Times</h1>
+
+  <div class="times-grid" id="listaTimes">
+    <p>Carregando times...</p>
   </div>
-</header>
 
-    <section class="container">
-      
-<div class="section-title">
-  <h2>Times participantes</h2>
-</div>
-<div id="times-lista"></div>
+  <div class="nav-bottom">
+    <a href="index.html">Início</a>
+    <a href="classificacao.html">Classificação</a>
+    <a href="times.html" class="active">Times</a>
+    <a href="jogos.html">Jogos</a>
+  </div>
 
-    </section>
-    
-<nav class="bottom-nav">
-  <a href="index.html" class=""><span>🏠</span>Início</a>
-  <a href="jogos.html" class=""><span>📅</span>Jogos</a>
-  <a href="classificacao.html" class=""><span>📊</span>Tabela</a>
-  <a href="times.html" class="active"><span>🛡️</span>Times</a>
-  <a href="admin.html" class=""><span>⚙️</span>Admin</a>
-</nav>
-
-  </main>
-
-  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
-const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
-window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-</script>
-<script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="times.js"></script>
 
 </body>
 </html>
