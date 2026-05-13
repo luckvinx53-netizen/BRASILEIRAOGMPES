@@ -1,1 +1,1 @@
-const supabase = window.supabaseClient;
+const supabase = window.supabaseClient || null;
