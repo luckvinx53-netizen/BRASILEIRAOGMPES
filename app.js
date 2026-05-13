@@ -1,5 +1,5 @@
-const SUPABASE_URL = "SUA_URL";
-const SUPABASE_KEY = "SUA_CHAVE_ANON";
+const SUPABASE_URL = "https://ewebwjenkeletgshhzvb.supabase.co";
+const SUPABASE_KEY = "SUA_CHAVE_ANON_AQUI";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
@@ -7,15 +7,14 @@ const supabase = window.supabase.createClient(
 );
 
 async function carregarTabela() {
+  const tabela = document.getElementById("tabela");
+
   const { data, error } = await supabase
     .from("times")
-    .select("*")
-    .order("pontos", { ascending: false });
+    .select("*");
 
   console.log(data);
   console.log(error);
-
-  const tabela = document.getElementById("tabela");
 
   if (error) {
     tabela.innerHTML = `
