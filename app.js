@@ -1,5 +1,6 @@
 const SUPABASE_URL = "https://ewebwjenkeletgshhzvb.supabase.co";
-const SUPABASE_KEY = "SUA_CHAVE_ANON_AQUI";
+
+const SUPABASE_KEY = "COLE_SUA_CHAVE_ANON_AQUI";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
@@ -7,16 +8,18 @@ const supabase = window.supabase.createClient(
 );
 
 async function carregarTabela() {
+
   const tabela = document.getElementById("tabela");
 
   const { data, error } = await supabase
     .from("times")
-    .select("*");
+    .select("*")
+    .order("pontos", { ascending: false });
 
   console.log(data);
   console.log(error);
 
-  if (error) {
+  if(error){
     tabela.innerHTML = `
       <tr>
         <td colspan="4">Erro ao carregar</td>
@@ -28,6 +31,7 @@ async function carregarTabela() {
   tabela.innerHTML = "";
 
   data.forEach((time, index) => {
+
     tabela.innerHTML += `
       <tr>
         <td>${index + 1}</td>
@@ -36,7 +40,9 @@ async function carregarTabela() {
         <td>${time.jogos}</td>
       </tr>
     `;
+
   });
+
 }
 
 carregarTabela();
