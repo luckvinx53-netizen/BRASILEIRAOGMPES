@@ -6,244 +6,265 @@
   <title>Central Admin</title>
 
   <style>
-    body{
-      margin:0;
-      padding:25px;
-      background:#001845;
-      color:white;
-      font-family:Arial, sans-serif;
-    }
-
-    h1{
-      text-align:center;
-      font-size:42px;
-      margin-bottom:25px;
-    }
-
-    h2{
-      margin-top:0;
-    }
-
-    .card{
-      max-width:650px;
-      margin:0 auto 25px;
-      background:#0d2b5c;
-      padding:25px;
-      border-radius:22px;
-    }
-
-    input, select{
-      width:100%;
-      padding:15px;
-      margin-bottom:14px;
-      border:none;
-      border-radius:12px;
-      font-size:16px;
-      box-sizing:border-box;
-    }
-
-    button{
-      width:100%;
-      padding:16px;
-      border:none;
-      border-radius:12px;
-      background:#3b82f6;
-      color:white;
-      font-size:18px;
-      cursor:pointer;
-      margin-top:5px;
-    }
-
-    button:hover{
-      opacity:.9;
-    }
-
-    .linha{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    @media(max-width:600px){
-      .linha{
-        grid-template-columns:1fr;
-      }
-    }
+    body{margin:0;padding:25px;background:#001845;color:white;font-family:Arial,sans-serif;padding-bottom:80px}
+    h1{text-align:center;font-size:42px}
+    h2{margin-top:0}
+    .card{max-width:700px;margin:0 auto 25px;background:#0d2b5c;padding:25px;border-radius:22px}
+    input,select{width:100%;padding:15px;margin-bottom:14px;border:none;border-radius:12px;font-size:16px;box-sizing:border-box}
+    button{width:100%;padding:16px;border:none;border-radius:12px;background:#3b82f6;color:white;font-size:18px;cursor:pointer;margin-top:5px}
+    .danger{background:#ef4444}
+    .linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .jogo-item{background:#12376d;padding:15px;border-radius:15px;margin-bottom:12px}
+    .jogo-item strong{display:block;margin-bottom:8px}
+    @media(max-width:600px){.linha{grid-template-columns:1fr}}
   </style>
 </head>
 
 <body>
 
-  <script>
-    const senha = prompt("Digite a senha do admin:");
+<script>
+  const senha = prompt("Digite a senha do admin:");
+  if(senha !== "1234"){
+    alert("Acesso negado!");
+    window.location.href = "index.html";
+  }
+</script>
 
-    if(senha !== "1234"){
-      alert("Acesso negado!");
-      window.location.href = "index.html";
-    }
-  </script>
+<h1>Central Admin</h1>
 
-  <h1>Central Admin</h1>
+<div class="card">
+  <h2>Atualizar Time</h2>
 
-  <div class="card">
-    <h2>Atualizar Time</h2>
+  <select id="timeTabela"></select>
 
-    <select id="timeTabela">
-      <option>Carregando times...</option>
-    </select>
-
-    <div class="linha">
-      <input type="number" id="pontos" placeholder="Pontos">
-      <input type="number" id="jogos" placeholder="Jogos">
-    </div>
-
-    <div class="linha">
-      <input type="number" id="vitorias" placeholder="Vitórias">
-      <input type="number" id="empates" placeholder="Empates">
-    </div>
-
-    <div class="linha">
-      <input type="number" id="derrotas" placeholder="Derrotas">
-      <input type="number" id="saldo" placeholder="Saldo">
-    </div>
-
-    <div class="linha">
-      <input type="number" id="gols_pro" placeholder="Gols Pró">
-      <input type="number" id="gols_contra" placeholder="Gols Contra">
-    </div>
-
-    <button onclick="atualizarTime()">Salvar Time</button>
+  <div class="linha">
+    <input type="number" id="pontos" placeholder="Pontos">
+    <input type="number" id="jogos" placeholder="Jogos">
   </div>
 
-  <div class="card">
-    <h2>Cadastrar Jogo</h2>
-
-    <div class="linha">
-      <select id="timeCasa">
-        <option>Carregando...</option>
-      </select>
-
-      <select id="timeFora">
-        <option>Carregando...</option>
-      </select>
-    </div>
-
-    <div class="linha">
-      <input type="number" id="rodada" placeholder="Rodada">
-      <input type="text" id="local" placeholder="Local do jogo">
-    </div>
-
-    <div class="linha">
-      <input type="date" id="data_jogo">
-      <input type="text" id="hora_jogo" placeholder="Horário. Ex: 16:00">
-    </div>
-
-    <div class="linha">
-      <input type="number" id="placar_casa" placeholder="Placar casa">
-      <input type="number" id="placar_fora" placeholder="Placar fora">
-    </div>
-
-    <select id="status">
-      <option value="Agendado">Agendado</option>
-      <option value="Em andamento">Em andamento</option>
-      <option value="Encerrado">Encerrado</option>
-      <option value="Adiado">Adiado</option>
-    </select>
-
-    <button onclick="cadastrarJogo()">Salvar Jogo</button>
+  <div class="linha">
+    <input type="number" id="vitorias" placeholder="Vitórias">
+    <input type="number" id="empates" placeholder="Empates">
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <div class="linha">
+    <input type="number" id="derrotas" placeholder="Derrotas">
+    <input type="number" id="saldo" placeholder="Saldo">
+  </div>
 
-  <script>
-    const SUPABASE_URL = "https://ewebwjenkeletgshhzvb.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
+  <div class="linha">
+    <input type="number" id="gols_pro" placeholder="Gols Pró">
+    <input type="number" id="gols_contra" placeholder="Gols Contra">
+  </div>
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  <button onclick="atualizarTime()">Salvar Time</button>
+</div>
 
-    async function carregarTimes(){
-      const { data, error } = await supabaseClient
-        .from("times")
-        .select("*")
-        .order("nome", { ascending:true });
+<div class="card">
+  <h2>Cadastrar / Editar Jogo</h2>
 
-      if(error){
-        alert("Erro ao carregar times");
-        console.log(error);
-        return;
-      }
+  <input type="hidden" id="jogoId">
 
-      const timeTabela = document.getElementById("timeTabela");
-      const timeCasa = document.getElementById("timeCasa");
-      const timeFora = document.getElementById("timeFora");
+  <div class="linha">
+    <select id="timeCasa"></select>
+    <select id="timeFora"></select>
+  </div>
 
-      timeTabela.innerHTML = "";
-      timeCasa.innerHTML = "";
-      timeFora.innerHTML = "";
+  <div class="linha">
+    <input type="number" id="rodada" placeholder="Rodada">
+    <input type="text" id="local" placeholder="Local do jogo">
+  </div>
 
-      data.forEach(time => {
-        timeTabela.innerHTML += `<option value="${time.id}">${time.nome}</option>`;
-        timeCasa.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
-        timeFora.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
-      });
-    }
+  <div class="linha">
+    <input type="date" id="data_jogo">
+    <input type="text" id="hora_jogo" placeholder="Horário. Ex: 16:00">
+  </div>
 
-    async function atualizarTime(){
-      const id = document.getElementById("timeTabela").value;
+  <div class="linha">
+    <input type="number" id="placar_casa" placeholder="Placar casa">
+    <input type="number" id="placar_fora" placeholder="Placar fora">
+  </div>
 
-      const dados = {
-        pontos: Number(document.getElementById("pontos").value),
-        jogos: Number(document.getElementById("jogos").value),
-        vitorias: Number(document.getElementById("vitorias").value),
-        empates: Number(document.getElementById("empates").value),
-        derrotas: Number(document.getElementById("derrotas").value),
-        saldo: Number(document.getElementById("saldo").value),
-        gols_pro: Number(document.getElementById("gols_pro").value),
-        gols_contra: Number(document.getElementById("gols_contra").value)
-      };
+  <select id="status">
+    <option value="Agendado">Agendado</option>
+    <option value="Em andamento">Em andamento</option>
+    <option value="Encerrado">Encerrado</option>
+    <option value="Adiado">Adiado</option>
+  </select>
 
-      const { error } = await supabaseClient
-        .from("times")
-        .update(dados)
-        .eq("id", id);
+  <button onclick="salvarJogo()">Salvar Jogo</button>
+  <button class="danger" onclick="limparFormularioJogo()">Novo Jogo</button>
+</div>
 
-      if(error){
-        alert("Erro ao atualizar time");
-        console.log(error);
-        return;
-      }
+<div class="card">
+  <h2>Jogos Cadastrados</h2>
+  <div id="listaJogosAdmin">Carregando jogos...</div>
+</div>
 
-      alert("Time atualizado com sucesso!");
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-    async function cadastrarJogo(){
-      const jogo = {
-        rodada: Number(document.getElementById("rodada").value),
-        time_casa: document.getElementById("timeCasa").value,
-        time_fora: document.getElementById("timeFora").value,
-        placar_casa: Number(document.getElementById("placar_casa").value || 0),
-        placar_fora: Number(document.getElementById("placar_fora").value || 0),
-        local: document.getElementById("local").value,
-        data_jogo: document.getElementById("data_jogo").value,
-        hora_jogo: document.getElementById("hora_jogo").value,
-        status: document.getElementById("status").value
-      };
+<script>
+const SUPABASE_URL = "https://ewebwjenkeletgshhzvb.supabase.co";
+const SUPABASE_KEY = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
 
-      const { error } = await supabaseClient
-        .from("jogos")
-        .insert([jogo]);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      if(error){
-        alert("Erro ao salvar jogo");
-        console.log(error);
-        return;
-      }
+async function carregarTimes(){
+  const { data, error } = await supabaseClient
+    .from("times")
+    .select("*")
+    .order("nome", { ascending:true });
 
-      alert("Jogo cadastrado com sucesso!");
-    }
+  if(error){
+    alert("Erro ao carregar times");
+    console.log(error);
+    return;
+  }
 
-    carregarTimes();
-  </script>
+  const timeTabela = document.getElementById("timeTabela");
+  const timeCasa = document.getElementById("timeCasa");
+  const timeFora = document.getElementById("timeFora");
+
+  timeTabela.innerHTML = "";
+  timeCasa.innerHTML = "";
+  timeFora.innerHTML = "";
+
+  data.forEach(time => {
+    timeTabela.innerHTML += `<option value="${time.id}">${time.nome}</option>`;
+    timeCasa.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
+    timeFora.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
+  });
+}
+
+async function atualizarTime(){
+  const id = document.getElementById("timeTabela").value;
+
+  const dados = {
+    pontos: Number(document.getElementById("pontos").value),
+    jogos: Number(document.getElementById("jogos").value),
+    vitorias: Number(document.getElementById("vitorias").value),
+    empates: Number(document.getElementById("empates").value),
+    derrotas: Number(document.getElementById("derrotas").value),
+    saldo: Number(document.getElementById("saldo").value),
+    gols_pro: Number(document.getElementById("gols_pro").value),
+    gols_contra: Number(document.getElementById("gols_contra").value)
+  };
+
+  const { error } = await supabaseClient
+    .from("times")
+    .update(dados)
+    .eq("id", id);
+
+  if(error){
+    alert("Erro ao atualizar time");
+    console.log(error);
+    return;
+  }
+
+  alert("Time atualizado!");
+}
+
+async function salvarJogo(){
+  const id = document.getElementById("jogoId").value;
+
+  const jogo = {
+    rodada: Number(document.getElementById("rodada").value),
+    time_casa: document.getElementById("timeCasa").value,
+    time_fora: document.getElementById("timeFora").value,
+    placar_casa: Number(document.getElementById("placar_casa").value || 0),
+    placar_fora: Number(document.getElementById("placar_fora").value || 0),
+    local: document.getElementById("local").value,
+    data_jogo: document.getElementById("data_jogo").value,
+    hora_jogo: document.getElementById("hora_jogo").value,
+    status: document.getElementById("status").value
+  };
+
+  let error;
+
+  if(id){
+    const resposta = await supabaseClient
+      .from("jogos")
+      .update(jogo)
+      .eq("id", id);
+
+    error = resposta.error;
+  } else {
+    const resposta = await supabaseClient
+      .from("jogos")
+      .insert([jogo]);
+
+    error = resposta.error;
+  }
+
+  if(error){
+    alert("Erro ao salvar jogo");
+    console.log(error);
+    return;
+  }
+
+  alert(id ? "Jogo atualizado!" : "Jogo cadastrado!");
+  limparFormularioJogo();
+  carregarJogosAdmin();
+}
+
+async function carregarJogosAdmin(){
+  const lista = document.getElementById("listaJogosAdmin");
+
+  const { data, error } = await supabaseClient
+    .from("jogos")
+    .select("*")
+    .order("rodada", { ascending:true });
+
+  if(error){
+    lista.innerHTML = "Erro ao carregar jogos.";
+    console.log(error);
+    return;
+  }
+
+  lista.innerHTML = "";
+
+  data.forEach(jogo => {
+    lista.innerHTML += `
+      <div class="jogo-item">
+        <strong>${jogo.rodada}ª Rodada - ${jogo.time_casa} ${jogo.placar_casa} x ${jogo.placar_fora} ${jogo.time_fora}</strong>
+        <div>${jogo.data_jogo || ""} • ${jogo.hora_jogo || ""}</div>
+        <div>${jogo.local || ""}</div>
+        <div>Status: ${jogo.status}</div>
+        <button onclick='editarJogo(${JSON.stringify(jogo)})'>Editar este jogo</button>
+      </div>
+    `;
+  });
+}
+
+function editarJogo(jogo){
+  document.getElementById("jogoId").value = jogo.id;
+  document.getElementById("timeCasa").value = jogo.time_casa;
+  document.getElementById("timeFora").value = jogo.time_fora;
+  document.getElementById("rodada").value = jogo.rodada;
+  document.getElementById("local").value = jogo.local;
+  document.getElementById("data_jogo").value = jogo.data_jogo;
+  document.getElementById("hora_jogo").value = jogo.hora_jogo;
+  document.getElementById("placar_casa").value = jogo.placar_casa;
+  document.getElementById("placar_fora").value = jogo.placar_fora;
+  document.getElementById("status").value = jogo.status;
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function limparFormularioJogo(){
+  document.getElementById("jogoId").value = "";
+  document.getElementById("rodada").value = "";
+  document.getElementById("local").value = "";
+  document.getElementById("data_jogo").value = "";
+  document.getElementById("hora_jogo").value = "";
+  document.getElementById("placar_casa").value = "";
+  document.getElementById("placar_fora").value = "";
+  document.getElementById("status").value = "Agendado";
+}
+
+carregarTimes();
+carregarJogosAdmin();
+</script>
 
 </body>
 </html>
