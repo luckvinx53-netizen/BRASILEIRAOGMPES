@@ -1,21 +1,163 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Início</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Brasileirão Betano 2026</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#001b44;
+color:white;
+padding-bottom:90px;
+}
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+padding:20px;
+background:#031633;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.logo{
+width:70px;
+height:70px;
+border-radius:20px;
+background:linear-gradient(135deg,#00ff73,#9cffb7);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+}
+
+header h1{
+font-size:24px;
+}
+
+header p{
+color:#b5c7ff;
+margin-top:4px;
+}
+
+.banner{
+padding:20px;
+}
+
+.card{
+background:#071d46;
+border:1px solid rgba(255,255,255,.1);
+border-radius:25px;
+padding:20px;
+margin-top:20px;
+}
+
+.card h2{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.card p{
+color:#c9d4ff;
+line-height:1.5;
+}
+
+.menu{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#031633;
+display:flex;
+justify-content:space-around;
+padding:14px 0;
+border-top:1px solid rgba(255,255,255,.1);
+}
+
+.menu a{
+color:#c9d4ff;
+text-decoration:none;
+font-size:15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+}
+
+.active{
+color:#00ff99 !important;
+}
+
+</style>
 </head>
-<body style="background:#00142b;color:white;font-family:Arial">
-<h1>Brasileirão Betano 2026</h1>
-<p>Página inicial funcionando.</p>
+<body>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
-const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
-window.supabaseClient = window.supabase.createClient(supabaseUrl,supabaseKey);
-</script>
+<header>
+<div class="logo">⚽</div>
 
-<script src="app.js"></script>
+<div>
+<h1>Brasileirão Betano</h1>
+<p>App oficial do campeonato</p>
+</div>
+</header>
+
+<section class="banner">
+
+<div class="card">
+<h2>Brasileirão Betano 2026</h2>
+
+<p>
+Acompanhe classificação, jogos, estatísticas e informações dos clubes do Campeonato Brasileiro em tempo real.
+</p>
+</div>
+
+<div class="card">
+<h2>Última atualização</h2>
+
+<p>
+Sistema conectado ao Supabase para atualizar automaticamente tabela e jogos.
+</p>
+</div>
+
+</section>
+
+<nav class="menu">
+
+<a href="index.html" class="active">
+🏠
+<span>Início</span>
+</a>
+
+<a href="jogos.html">
+📅
+<span>Jogos</span>
+</a>
+
+<a href="classificacao.html">
+📊
+<span>Tabela</span>
+</a>
+
+<a href="times.html">
+🛡️
+<span>Times</span>
+</a>
+
+<a href="admin.html">
+⚙️
+<span>Admin</span>
+</a>
+
+</nav>
+
 </body>
 </html>
