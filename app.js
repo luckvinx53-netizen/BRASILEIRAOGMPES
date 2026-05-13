@@ -18,7 +18,7 @@ async function carregarTabela() {
       .select("*")
       .order("pontos", { ascending: false });
 
-    if (error) throw error;
+    if(error) throw error;
 
     tabela.innerHTML = "";
 
@@ -30,22 +30,29 @@ async function carregarTabela() {
           <td>${time.nome}</td>
           <td>${time.pontos}</td>
           <td>${time.jogos}</td>
+          <td>${time.vitorias}</td>
+          <td>${time.empates}</td>
+          <td>${time.derrotas}</td>
+          <td>${time.gols_pro}</td>
+          <td>${time.gols_contra}</td>
+          <td>${time.saldo}</td>
         </tr>
       `;
 
     });
 
-  } catch (err) {
+  } catch(err){
 
     console.log(err);
 
     tabela.innerHTML = `
       <tr>
-        <td colspan="4">
-          Erro ao carregar
+        <td colspan="10">
+          Erro ao carregar tabela
         </td>
       </tr>
     `;
+
   }
 
 }
