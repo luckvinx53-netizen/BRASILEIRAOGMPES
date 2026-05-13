@@ -3,80 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Brasileirão Betano</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Admin</title>
+
+  <style>
+
+    body{
+      margin:0;
+      padding:30px;
+      background:#001845;
+      color:white;
+      font-family:Arial, sans-serif;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .painel{
+      max-width:500px;
+      margin:auto;
+      background:#0d2b5c;
+      padding:30px;
+      border-radius:20px;
+    }
+
+    input{
+      width:100%;
+      padding:15px;
+      margin-bottom:15px;
+      border:none;
+      border-radius:10px;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:10px;
+      background:#2f80ed;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      opacity:.9;
+    }
+
+  </style>
 </head>
+
 <body>
-  <main class="app">
-    
-<header class="topbar">
-  <div class="logo">⚽</div>
-  <div>
-    <h1>Brasileirão Betano</h1>
-    <p>App oficial do campeonato</p>
+
+  <script>
+
+    const senha = prompt("Digite a senha do admin:");
+
+    if(senha !== "1234"){
+      alert("Acesso negado!");
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+  <h1>Painel Admin</h1>
+
+  <div class="painel">
+
+    <input type="text" placeholder="Nome do time">
+
+    <input type="number" placeholder="Pontos">
+
+    <input type="number" placeholder="Jogos">
+
+    <button>Salvar</button>
+
   </div>
-</header>
-
-    <section class="container">
-      
-<div class="section-title">
-  <h2>Área do administrador</h2>
-</div>
-
-<div class="notice">
-  Painel visual pronto. Depois conectamos o botão para salvar direto no Supabase.
-</div>
-
-<br>
-
-<div class="card">
-  <form id="form-resultado" class="form">
-    <label>
-      Time mandante
-      <input name="mandante" placeholder="Palmeiras" required>
-    </label>
-
-    <label>
-      Gols do mandante
-      <input type="number" name="gols_mandante" min="0" required>
-    </label>
-
-    <label>
-      Time visitante
-      <input name="visitante" placeholder="Flamengo" required>
-    </label>
-
-    <label>
-      Gols do visitante
-      <input type="number" name="gols_visitante" min="0" required>
-    </label>
-
-    <button class="btn primary" type="submit">Salvar resultado</button>
-  </form>
-</div>
-
-<div id="admin-output"></div>
-
-    </section>
-    
-<nav class="bottom-nav">
-  <a href="index.html" class=""><span>🏠</span>Início</a>
-  <a href="jogos.html" class=""><span>📅</span>Jogos</a>
-  <a href="classificacao.html" class=""><span>📊</span>Tabela</a>
-  <a href="times.html" class=""><span>🛡️</span>Times</a>
-  <a href="admin.html" class="active"><span>⚙️</span>Admin</a>
-</nav>
-
-  </main>
-
-  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
-const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
-window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-</script>
-<script src="app.js"></script>
 
 </body>
 </html>
