@@ -1,163 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Brasileirão Betano 2026</title>
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
-
-body{
-background:#001b44;
-color:white;
-padding-bottom:90px;
-}
-
-header{
-display:flex;
-align-items:center;
-gap:15px;
-padding:20px;
-background:#031633;
-border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.logo{
-width:70px;
-height:70px;
-border-radius:20px;
-background:linear-gradient(135deg,#00ff73,#9cffb7);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:35px;
-}
-
-header h1{
-font-size:24px;
-}
-
-header p{
-color:#b5c7ff;
-margin-top:4px;
-}
-
-.banner{
-padding:20px;
-}
-
-.card{
-background:#071d46;
-border:1px solid rgba(255,255,255,.1);
-border-radius:25px;
-padding:20px;
-margin-top:20px;
-}
-
-.card h2{
-font-size:30px;
-margin-bottom:10px;
-}
-
-.card p{
-color:#c9d4ff;
-line-height:1.5;
-}
-
-.menu{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#031633;
-display:flex;
-justify-content:space-around;
-padding:14px 0;
-border-top:1px solid rgba(255,255,255,.1);
-}
-
-.menu a{
-color:#c9d4ff;
-text-decoration:none;
-font-size:15px;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:5px;
-}
-
-.active{
-color:#00ff99 !important;
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início - Brasileirão Betano</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<header>
-<div class="logo">⚽</div>
-
-<div>
-<h1>Brasileirão Betano</h1>
-<p>App oficial do campeonato</p>
-</div>
+  <main class="app">
+    
+<header class="topbar">
+  <div class="logo">⚽</div>
+  <div>
+    <h1>Brasileirão Betano</h1>
+    <p>App oficial do campeonato</p>
+  </div>
 </header>
 
-<section class="banner">
+    <section class="container">
+      
+<div class="hero">
+  <span class="badge">🤖 Campeonato com IA</span>
+  <h2>Brasileirão Betano 2026</h2>
+  <p>Acompanhe classificação, jogos, estatísticas e informações dos clubes em tempo real.</p>
 
-<div class="card">
-<h2>Brasileirão Betano 2026</h2>
-
-<p>
-Acompanhe classificação, jogos, estatísticas e informações dos clubes do Campeonato Brasileiro em tempo real.
-</p>
+  <div class="actions">
+    <a class="btn primary" href="jogos.html">Ver jogos</a>
+    <a class="btn secondary" href="classificacao.html">Classificação</a>
+  </div>
 </div>
 
-<div class="card">
-<h2>Última atualização</h2>
-
-<p>
-Sistema conectado ao Supabase para atualizar automaticamente tabela e jogos.
-</p>
+<div class="stats">
+  <div class="stat"><strong>20</strong><span>Times</span></div>
+  <div class="stat"><strong>16</strong><span>Rodadas</span></div>
+  <div class="stat"><strong>29</strong><span>Líder</span></div>
+  <div class="stat"><strong>17ª</strong><span>Rodada</span></div>
 </div>
 
-</section>
+<div class="section-title">
+  <h2>Próximos jogos</h2>
+  <a href="jogos.html">Ver tudo</a>
+</div>
+<div id="jogos-lista"></div>
 
-<nav class="menu">
+<div class="section-title">
+  <h2>Classificação</h2>
+  <a href="classificacao.html">Tabela completa</a>
+</div>
+<div class="card table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Time</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th>
+      </tr>
+    </thead>
+    <tbody id="classificacao-tabela"></tbody>
+  </table>
+</div>
 
-<a href="index.html" class="active">
-🏠
-<span>Início</span>
-</a>
-
-<a href="jogos.html">
-📅
-<span>Jogos</span>
-</a>
-
-<a href="classificacao.html">
-📊
-<span>Tabela</span>
-</a>
-
-<a href="times.html">
-🛡️
-<span>Times</span>
-</a>
-
-<a href="admin.html">
-⚙️
-<span>Admin</span>
-</a>
-
+    </section>
+    
+<nav class="bottom-nav">
+  <a href="index.html" class="active"><span>🏠</span>Início</a>
+  <a href="jogos.html" class=""><span>📅</span>Jogos</a>
+  <a href="classificacao.html" class=""><span>📊</span>Tabela</a>
+  <a href="times.html" class=""><span>🛡️</span>Times</a>
+  <a href="admin.html" class=""><span>⚙️</span>Admin</a>
 </nav>
+
+  </main>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
+const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
+window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+<script src="app.js"></script>
 
 </body>
 </html>
