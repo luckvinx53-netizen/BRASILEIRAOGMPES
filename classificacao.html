@@ -6,40 +6,56 @@
   <title>Classificação - Brasileirão Betano</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="classificacao">
+<body>
   <main class="app">
-    <header class="topbar">
-  <div class="brand">
-    <div class="logo">⚽</div>
-    <div>
-      <h1>Brasileirão Betano</h1>
-      <p>App oficial do campeonato</p>
-    </div>
+    
+<header class="topbar">
+  <div class="logo">⚽</div>
+  <div>
+    <h1>Brasileirão Betano</h1>
+    <p>App oficial do campeonato</p>
   </div>
 </header>
+
     <section class="container">
       
 <div class="section-title">
   <h2>Classificação geral</h2>
 </div>
+
 <div class="card table-wrap">
   <table>
     <thead>
-      <tr><th>#</th><th>Time</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr>
+      <tr>
+        <th>#</th><th>Time</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th>
+      </tr>
     </thead>
-    <tbody id="classificacao-tabela"></tbody>
+    <tbody id="classificacao-tabela">
+      <tr><td colspan="8">Carregando...</td></tr>
+    </tbody>
   </table>
 </div>
 
     </section>
-    <nav class="bottom-nav">
+    
+<nav class="bottom-nav">
   <a href="index.html" class=""><span>🏠</span>Início</a>
   <a href="jogos.html" class=""><span>📅</span>Jogos</a>
   <a href="classificacao.html" class="active"><span>📊</span>Tabela</a>
   <a href="times.html" class=""><span>🛡️</span>Times</a>
   <a href="admin.html" class=""><span>⚙️</span>Admin</a>
 </nav>
+
   </main>
-  <script src="app.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
+const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
+window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+<script src="app.js"></script>
+
 </body>
 </html>
