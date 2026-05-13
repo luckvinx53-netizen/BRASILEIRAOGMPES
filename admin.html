@@ -1,119 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Brasileirão Betano</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin</title>
 </head>
-<body data-page="admin">
-  <main class="app">
-    <header class="topbar">
-  <div class="brand">
-    <div class="logo">⚽</div>
-    <div>
-      <h1>Brasileirão Betano</h1>
-      <p>App oficial do campeonato</p>
-    </div>
-  </div>
-</header>
-    <section class="container">
-      
-<div class="section-title">
-  <h2>Área do administrador</h2>
-</div>
+<body style="background:#00142b;color:white;font-family:Arial">
+<h1>Admin</h1>
+<p>Painel admin funcionando.</p>
 
-<div class="notice">
-  Esta é uma simulação visual. Depois, podemos ligar este formulário em uma API para salvar resultados, atualizar tabela e gerar resumo com IA.
-</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
+const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
+window.supabaseClient = window.supabase.createClient(supabaseUrl,supabaseKey);
+</script>
 
-<br>
-
-<div class="card">
-  <form id="form-resultado" class="form">
-    <label>
-      Time mandante
-      <select name="mandante" required>
-                <option value="Palmeiras">Palmeiras</option>
-        <option value="Vitória">Vitória</option>
-        <option value="Corinthians">Corinthians</option>
-        <option value="Internacional">Internacional</option>
-        <option value="Chapecoense">Chapecoense</option>
-        <option value="Coritiba">Coritiba</option>
-        <option value="Remo">Remo</option>
-        <option value="Fluminense">Fluminense</option>
-        <option value="Flamengo">Flamengo</option>
-        <option value="Botafogo">Botafogo</option>
-        <option value="Bahia">Bahia</option>
-        <option value="Vasco">Vasco</option>
-        <option value="Athletico-PR">Athletico-PR</option>
-        <option value="Mirassol">Mirassol</option>
-        <option value="Cruzeiro">Cruzeiro</option>
-        <option value="Atlético-MG">Atlético-MG</option>
-        <option value="Grêmio">Grêmio</option>
-        <option value="RB Bragantino">RB Bragantino</option>
-        <option value="São Paulo">São Paulo</option>
-        <option value="Santos">Santos</option>
-      </select>
-    </label>
-
-    <label>
-      Gols do mandante
-      <input type="number" name="gols_mandante" min="0" required>
-    </label>
-
-    <label>
-      Time visitante
-      <select name="visitante" required>
-        <option value="Tremendão">Tremendão</option>
-                <option value="Palmeiras">Palmeiras</option>
-        <option value="Vitória">Vitória</option>
-        <option value="Corinthians">Corinthians</option>
-        <option value="Internacional">Internacional</option>
-        <option value="Chapecoense">Chapecoense</option>
-        <option value="Coritiba">Coritiba</option>
-        <option value="Remo">Remo</option>
-        <option value="Fluminense">Fluminense</option>
-        <option value="Flamengo">Flamengo</option>
-        <option value="Botafogo">Botafogo</option>
-        <option value="Bahia">Bahia</option>
-        <option value="Vasco">Vasco</option>
-        <option value="Athletico-PR">Athletico-PR</option>
-        <option value="Mirassol">Mirassol</option>
-        <option value="Cruzeiro">Cruzeiro</option>
-        <option value="Atlético-MG">Atlético-MG</option>
-        <option value="Grêmio">Grêmio</option>
-        <option value="RB Bragantino">RB Bragantino</option>
-        <option value="São Paulo">São Paulo</option>
-        <option value="Santos">Santos</option>
-      </select>
-    </label>
-
-    <label>
-      Gols do visitante
-      <input type="number" name="gols_visitante" min="0" required>
-    </label>
-
-    <label>
-      Observações do jogo
-      <textarea name="obs" placeholder="Ex: jogo pegado, gols no segundo tempo..."></textarea>
-    </label>
-
-    <button class="btn primary" type="submit">Salvar resultado</button>
-  </form>
-</div>
-
-<div id="admin-output"></div>
-
-    </section>
-    <nav class="bottom-nav">
-  <a href="index.html" class=""><span>🏠</span>Início</a>
-  <a href="jogos.html" class=""><span>📅</span>Jogos</a>
-  <a href="classificacao.html" class=""><span>📊</span>Tabela</a>
-  <a href="times.html" class=""><span>🛡️</span>Times</a>
-  <a href="admin.html" class="active"><span>⚙️</span>Admin</a>
-</nav>
-  </main>
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
