@@ -1,49 +1,168 @@
+<!-- jogos.html -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogos - Brasileirão Betano</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Jogos</title>
+
+  <style>
+
+    body{
+      margin:0;
+      padding:0;
+      background:#001845;
+      color:white;
+      font-family:Arial, sans-serif;
+      padding-bottom:100px;
+    }
+
+    .container{
+      width:90%;
+      margin:auto;
+      padding-top:25px;
+    }
+
+    .topo{
+      background:#0d2b5c;
+      padding:20px;
+      border-radius:25px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-bottom:30px;
+    }
+
+    .logo{
+      width:80px;
+      height:80px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#4ade80,#22c55e);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:42px;
+    }
+
+    .topo h1{
+      margin:0;
+      font-size:42px;
+    }
+
+    .topo p{
+      margin:5px 0 0;
+      opacity:.85;
+      font-size:20px;
+    }
+
+    .titulo{
+      font-size:42px;
+      margin-bottom:25px;
+    }
+
+    .rodada{
+      margin-bottom:30px;
+    }
+
+    .rodada h2{
+      margin-bottom:15px;
+      font-size:28px;
+      color:#7dff9b;
+    }
+
+    .jogo-card{
+      background:#0d2b5c;
+      border-radius:22px;
+      padding:20px;
+      margin-bottom:15px;
+    }
+
+    .times{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:15px;
+      font-size:24px;
+      font-weight:bold;
+    }
+
+    .placar{
+      font-size:34px;
+      color:#7dff9b;
+    }
+
+    .info{
+      opacity:.85;
+      line-height:1.7;
+      font-size:18px;
+    }
+
+    .status{
+      display:inline-block;
+      margin-top:12px;
+      background:#1e3a6d;
+      padding:8px 14px;
+      border-radius:15px;
+      font-size:14px;
+    }
+
+    .nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      background:#061b3f;
+      display:flex;
+      justify-content:space-around;
+      padding:15px 0;
+    }
+
+    .nav a{
+      color:white;
+      text-decoration:none;
+      font-size:18px;
+      opacity:.85;
+    }
+
+    .nav .active{
+      color:#7dff9b;
+      font-weight:bold;
+    }
+
+  </style>
 </head>
+
 <body>
-  <main class="app">
-    
-<header class="topbar">
-  <div class="logo">⚽</div>
-  <div>
-    <h1>Brasileirão Betano</h1>
-    <p>App oficial do campeonato</p>
+
+  <div class="container">
+
+    <div class="topo">
+
+      <div class="logo">⚽</div>
+
+      <div>
+        <h1>Brasileirão Betano</h1>
+        <p>App oficial do campeonato</p>
+      </div>
+
+    </div>
+
+    <h1 class="titulo">Jogos</h1>
+
+    <div id="listaJogos"></div>
+
   </div>
-</header>
 
-    <section class="container">
-      
-<div class="section-title">
-  <h2>Jogos</h2>
-</div>
-<div id="jogos-lista"></div>
+  <div class="nav">
+    <a href="index.html">Início</a>
+    <a href="jogos.html" class="active">Jogos</a>
+    <a href="classificacao.html">Tabela</a>
+    <a href="times.html">Times</a>
+  </div>
 
-    </section>
-    
-<nav class="bottom-nav">
-  <a href="index.html" class=""><span>🏠</span>Início</a>
-  <a href="jogos.html" class="active"><span>📅</span>Jogos</a>
-  <a href="classificacao.html" class=""><span>📊</span>Tabela</a>
-  <a href="times.html" class=""><span>🛡️</span>Times</a>
-  <a href="admin.html" class=""><span>⚙️</span>Admin</a>
-</nav>
-
-  </main>
-
-  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseUrl = "https://ewebwjenkeletgshhzvb.supabase.co";
-const supabaseKey = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
-window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-</script>
-<script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="jogos.js"></script>
 
 </body>
 </html>
