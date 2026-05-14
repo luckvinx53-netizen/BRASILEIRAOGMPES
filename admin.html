@@ -6,17 +6,27 @@
   <title>Central Admin</title>
 
   <style>
-    body{margin:0;padding:25px;background:#001845;color:white;font-family:Arial,sans-serif;padding-bottom:80px}
-    h1{text-align:center;font-size:42px}
+    body{margin:0;padding:20px;background:#001845;color:white;font-family:Arial,sans-serif;padding-bottom:90px}
+    h1{text-align:center;font-size:38px}
     h2{margin-top:0}
-    .card{max-width:700px;margin:0 auto 25px;background:#0d2b5c;padding:25px;border-radius:22px}
-    input,select{width:100%;padding:15px;margin-bottom:14px;border:none;border-radius:12px;font-size:16px;box-sizing:border-box}
-    button{width:100%;padding:16px;border:none;border-radius:12px;background:#3b82f6;color:white;font-size:18px;cursor:pointer;margin-top:5px}
+    .tabs{max-width:850px;margin:0 auto 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .tabs button{background:#12376d}
+    .card{max-width:850px;margin:0 auto 22px;background:#0d2b5c;padding:22px;border-radius:22px}
+    input,select,textarea{width:100%;padding:14px;margin-bottom:12px;border:none;border-radius:12px;font-size:16px;box-sizing:border-box}
+    textarea{min-height:90px;resize:vertical}
+    button{width:100%;padding:15px;border:none;border-radius:12px;background:#3b82f6;color:white;font-size:17px;cursor:pointer;margin-top:6px}
     .danger{background:#ef4444}
+    .ok{background:#22c55e;color:#001845;font-weight:bold}
+    .warning{background:#f59e0b;color:#001845;font-weight:bold}
     .linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .jogo-item{background:#12376d;padding:15px;border-radius:15px;margin-bottom:12px}
-    .jogo-item strong{display:block;margin-bottom:8px}
-    @media(max-width:600px){.linha{grid-template-columns:1fr}}
+    .hidden{display:none}
+    .item{background:#12376d;padding:15px;border-radius:15px;margin-bottom:12px}
+    .item strong{display:block;margin-bottom:8px}
+    small{opacity:.8}
+    @media(max-width:700px){
+      .linha,.tabs{grid-template-columns:1fr}
+      h1{font-size:32px}
+    }
   </style>
 </head>
 
@@ -32,73 +42,138 @@
 
 <h1>Central Admin</h1>
 
-<div class="card">
-  <h2>Atualizar Time Manualmente</h2>
-
-  <select id="timeTabela"></select>
-
-  <div class="linha">
-    <input type="number" id="pontos" placeholder="Pontos">
-    <input type="number" id="jogos" placeholder="Jogos">
-  </div>
-
-  <div class="linha">
-    <input type="number" id="vitorias" placeholder="Vitórias">
-    <input type="number" id="empates" placeholder="Empates">
-  </div>
-
-  <div class="linha">
-    <input type="number" id="derrotas" placeholder="Derrotas">
-    <input type="number" id="saldo" placeholder="Saldo">
-  </div>
-
-  <div class="linha">
-    <input type="number" id="gols_pro" placeholder="Gols Pró">
-    <input type="number" id="gols_contra" placeholder="Gols Contra">
-  </div>
-
-  <button onclick="atualizarTime()">Salvar Time</button>
+<div class="tabs">
+  <button onclick="abrirAba('abaJogos')">Jogos</button>
+  <button onclick="abrirAba('abaTimes')">Times</button>
+  <button onclick="abrirAba('abaJogadores')">Jogadores</button>
 </div>
 
-<div class="card">
-  <h2>Cadastrar / Editar Jogo</h2>
+<div id="abaJogos">
 
-  <input type="hidden" id="jogoId">
+  <div class="card">
+    <h2>Cadastrar / Editar Jogo</h2>
 
-  <div class="linha">
-    <select id="timeCasa"></select>
-    <select id="timeFora"></select>
+    <input type="hidden" id="jogoId">
+
+    <div class="linha">
+      <select id="timeCasa"></select>
+      <select id="timeFora"></select>
+    </div>
+
+    <div class="linha">
+      <input type="number" id="rodada" placeholder="Rodada">
+      <input type="text" id="local" placeholder="Estádio / Local">
+    </div>
+
+    <div class="linha">
+      <input type="date" id="data_jogo">
+      <input type="text" id="hora_jogo" placeholder="Horário. Ex: 16:00">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="placar_casa" placeholder="Placar Casa">
+      <input type="number" id="placar_fora" placeholder="Placar Fora">
+    </div>
+
+    <select id="status">
+      <option value="Agendado">Agendado</option>
+      <option value="Em andamento">Em andamento</option>
+      <option value="Encerrado">Encerrado</option>
+      <option value="Adiado">Adiado</option>
+    </select>
+
+    <input type="text" id="capacidade" placeholder="Capacidade do estádio">
+    <input type="text" id="foto_estadio" placeholder="URL da foto do estádio">
+
+    <textarea id="gols_casa" placeholder="Gols do time da casa. Ex: Pedro 34', Arrascaeta 80'"></textarea>
+    <textarea id="gols_fora" placeholder="Gols do time visitante"></textarea>
+    <textarea id="estatisticas" placeholder="Estatísticas do jogo. Ex: Posse, finalizações, cartões..."></textarea>
+
+    <button class="ok" onclick="salvarJogo()">Salvar Jogo</button>
+    <button class="warning" onclick="descomputarJogoAtual()">Descomputar Jogo Atual</button>
+    <button class="danger" onclick="limparFormularioJogo()">Novo Jogo</button>
   </div>
 
-  <div class="linha">
-    <input type="number" id="rodada" placeholder="Rodada">
-    <input type="text" id="local" placeholder="Local">
+  <div class="card">
+    <h2>Ferramentas da Tabela</h2>
+    <button class="warning" onclick="recalcularTabela()">Recalcular tabela inteira pelos jogos encerrados</button>
+    <small>Use isso se der algum erro geral na classificação.</small>
   </div>
 
-  <div class="linha">
-    <input type="date" id="data_jogo">
-    <input type="text" id="hora_jogo" placeholder="Horário">
+  <div class="card">
+    <h2>Jogos Cadastrados</h2>
+    <div id="listaJogosAdmin">Carregando jogos...</div>
   </div>
 
-  <div class="linha">
-    <input type="number" id="placar_casa" placeholder="Placar Casa">
-    <input type="number" id="placar_fora" placeholder="Placar Fora">
-  </div>
-
-  <select id="status">
-    <option value="Agendado">Agendado</option>
-    <option value="Em andamento">Em andamento</option>
-    <option value="Encerrado">Encerrado</option>
-    <option value="Adiado">Adiado</option>
-  </select>
-
-  <button onclick="salvarJogo()">Salvar Jogo</button>
-  <button class="danger" onclick="limparFormularioJogo()">Novo Jogo</button>
 </div>
 
-<div class="card">
-  <h2>Jogos Cadastrados</h2>
-  <div id="listaJogosAdmin">Carregando jogos...</div>
+<div id="abaTimes" class="hidden">
+
+  <div class="card">
+    <h2>Atualizar Time Manualmente</h2>
+
+    <select id="timeTabela"></select>
+
+    <div class="linha">
+      <input type="number" id="pontos" placeholder="Pontos">
+      <input type="number" id="jogos" placeholder="Jogos">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="vitorias" placeholder="Vitórias">
+      <input type="number" id="empates" placeholder="Empates">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="derrotas" placeholder="Derrotas">
+      <input type="number" id="saldo" placeholder="Saldo">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="gols_pro" placeholder="Gols Pró">
+      <input type="number" id="gols_contra" placeholder="Gols Contra">
+    </div>
+
+    <button onclick="atualizarTime()">Salvar Time</button>
+    <button onclick="preencherTimeManual()">Carregar dados do time selecionado</button>
+  </div>
+
+</div>
+
+<div id="abaJogadores" class="hidden">
+
+  <div class="card">
+    <h2>Cadastrar / Editar Jogador</h2>
+
+    <input type="hidden" id="jogadorId">
+
+    <input type="text" id="nomeJogador" placeholder="Nome do jogador">
+    <select id="timeJogador"></select>
+
+    <div class="linha">
+      <input type="text" id="posicaoJogador" placeholder="Posição">
+      <input type="number" id="numeroJogador" placeholder="Número">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="golsJogador" placeholder="Gols">
+      <input type="number" id="assistenciasJogador" placeholder="Assistências">
+    </div>
+
+    <div class="linha">
+      <input type="number" id="amarelosJogador" placeholder="Cartões amarelos">
+      <input type="number" id="vermelhosJogador" placeholder="Cartões vermelhos">
+    </div>
+
+    <button onclick="salvarJogador()">Salvar Jogador</button>
+    <button class="danger" onclick="limparJogador()">Novo Jogador</button>
+  </div>
+
+  <div class="card">
+    <h2>Jogadores Cadastrados</h2>
+    <div id="listaJogadores">Carregando jogadores...</div>
+  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -106,8 +181,16 @@
 <script>
 const SUPABASE_URL = "https://ewebwjenkeletgshhzvb.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EcuCNi9XnjNfhM2VYseGuw_mVaM0Iao";
-
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let timesCache = [];
+
+function abrirAba(id){
+  document.getElementById("abaJogos").classList.add("hidden");
+  document.getElementById("abaTimes").classList.add("hidden");
+  document.getElementById("abaJogadores").classList.add("hidden");
+  document.getElementById(id).classList.remove("hidden");
+}
 
 async function carregarTimes(){
   const { data, error } = await supabaseClient
@@ -121,19 +204,39 @@ async function carregarTimes(){
     return;
   }
 
-  const timeTabela = document.getElementById("timeTabela");
-  const timeCasa = document.getElementById("timeCasa");
-  const timeFora = document.getElementById("timeFora");
+  timesCache = data;
 
-  timeTabela.innerHTML = "";
-  timeCasa.innerHTML = "";
-  timeFora.innerHTML = "";
+  const selects = [
+    document.getElementById("timeTabela"),
+    document.getElementById("timeCasa"),
+    document.getElementById("timeFora"),
+    document.getElementById("timeJogador")
+  ];
+
+  selects.forEach(select => select.innerHTML = "");
 
   data.forEach(time => {
-    timeTabela.innerHTML += `<option value="${time.id}">${time.nome}</option>`;
-    timeCasa.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
-    timeFora.innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
+    document.getElementById("timeTabela").innerHTML += `<option value="${time.id}">${time.nome}</option>`;
+    document.getElementById("timeCasa").innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
+    document.getElementById("timeFora").innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
+    document.getElementById("timeJogador").innerHTML += `<option value="${time.nome}">${time.nome}</option>`;
   });
+}
+
+function preencherTimeManual(){
+  const id = document.getElementById("timeTabela").value;
+  const time = timesCache.find(t => String(t.id) === String(id));
+
+  if(!time) return;
+
+  document.getElementById("pontos").value = time.pontos || 0;
+  document.getElementById("jogos").value = time.jogos || 0;
+  document.getElementById("vitorias").value = time.vitorias || 0;
+  document.getElementById("empates").value = time.empates || 0;
+  document.getElementById("derrotas").value = time.derrotas || 0;
+  document.getElementById("saldo").value = time.saldo || 0;
+  document.getElementById("gols_pro").value = time.gols_pro || 0;
+  document.getElementById("gols_contra").value = time.gols_contra || 0;
 }
 
 async function atualizarTime(){
@@ -162,12 +265,11 @@ async function atualizarTime(){
   }
 
   alert("Time atualizado!");
+  carregarTimes();
 }
 
-async function salvarJogo(){
-  const id = document.getElementById("jogoId").value;
-
-  const jogo = {
+function pegarDadosJogo(){
+  return {
     rodada: Number(document.getElementById("rodada").value || 0),
     time_casa: document.getElementById("timeCasa").value,
     time_fora: document.getElementById("timeFora").value,
@@ -176,10 +278,24 @@ async function salvarJogo(){
     local: document.getElementById("local").value,
     data_jogo: document.getElementById("data_jogo").value,
     hora_jogo: document.getElementById("hora_jogo").value,
-    status: document.getElementById("status").value
+    status: document.getElementById("status").value,
+    capacidade: document.getElementById("capacidade").value,
+    foto_estadio: document.getElementById("foto_estadio").value,
+    gols_casa: document.getElementById("gols_casa").value,
+    gols_fora: document.getElementById("gols_fora").value,
+    estatisticas: document.getElementById("estatisticas").value
   };
+}
 
+async function salvarJogo(){
+  const id = document.getElementById("jogoId").value;
+  const jogo = pegarDadosJogo();
   let jogoSalvoId = id;
+
+  if(jogo.time_casa === jogo.time_fora){
+    alert("O time da casa e o visitante não podem ser iguais.");
+    return;
+  }
 
   if(id){
     const { error } = await supabaseClient
@@ -192,11 +308,10 @@ async function salvarJogo(){
       console.log(error);
       return;
     }
-
   } else {
     const { data, error } = await supabaseClient
       .from("jogos")
-      .insert([{ ...jogo, computado: false }])
+      .insert([{ ...jogo, computado:false }])
       .select();
 
     if(error){
@@ -209,132 +324,213 @@ async function salvarJogo(){
   }
 
   if(jogo.status === "Encerrado"){
-    await atualizarTabelaPeloJogo(jogoSalvoId);
+    await computarJogo(jogoSalvoId);
   } else {
     alert("Jogo salvo!");
   }
 
   limparFormularioJogo();
   carregarJogosAdmin();
+  carregarTimes();
 }
 
-async function atualizarTabelaPeloJogo(jogoId){
-  const { data:jogo, error:erroJogo } = await supabaseClient
+function calcularResultado(jogo){
+  const pc = Number(jogo.placar_casa || 0);
+  const pf = Number(jogo.placar_fora || 0);
+
+  let casa = {pontos:0,jogos:1,vitorias:0,empates:0,derrotas:0,gols_pro:pc,gols_contra:pf,saldo:pc-pf};
+  let fora = {pontos:0,jogos:1,vitorias:0,empates:0,derrotas:0,gols_pro:pf,gols_contra:pc,saldo:pf-pc};
+
+  if(pc > pf){
+    casa.pontos = 3;
+    casa.vitorias = 1;
+    fora.derrotas = 1;
+  } else if(pc < pf){
+    fora.pontos = 3;
+    fora.vitorias = 1;
+    casa.derrotas = 1;
+  } else {
+    casa.pontos = 1;
+    fora.pontos = 1;
+    casa.empates = 1;
+    fora.empates = 1;
+  }
+
+  return {casa, fora};
+}
+
+async function alterarTabelaPorJogo(jogo, modo){
+  const { data:times, error } = await supabaseClient
+    .from("times")
+    .select("*")
+    .in("nome", [jogo.time_casa, jogo.time_fora]);
+
+  if(error){
+    alert("Erro ao buscar times");
+    console.log(error);
+    return false;
+  }
+
+  const timeCasa = times.find(t => t.nome === jogo.time_casa);
+  const timeFora = times.find(t => t.nome === jogo.time_fora);
+
+  if(!timeCasa || !timeFora){
+    alert("Erro: os nomes dos times do jogo não batem com a tabela times.");
+    return false;
+  }
+
+  const r = calcularResultado(jogo);
+  const mult = modo === "somar" ? 1 : -1;
+
+  const novoCasa = {
+    pontos: Math.max(0, Number(timeCasa.pontos || 0) + r.casa.pontos * mult),
+    jogos: Math.max(0, Number(timeCasa.jogos || 0) + r.casa.jogos * mult),
+    vitorias: Math.max(0, Number(timeCasa.vitorias || 0) + r.casa.vitorias * mult),
+    empates: Math.max(0, Number(timeCasa.empates || 0) + r.casa.empates * mult),
+    derrotas: Math.max(0, Number(timeCasa.derrotas || 0) + r.casa.derrotas * mult),
+    gols_pro: Math.max(0, Number(timeCasa.gols_pro || 0) + r.casa.gols_pro * mult),
+    gols_contra: Math.max(0, Number(timeCasa.gols_contra || 0) + r.casa.gols_contra * mult),
+    saldo: Number(timeCasa.saldo || 0) + r.casa.saldo * mult
+  };
+
+  const novoFora = {
+    pontos: Math.max(0, Number(timeFora.pontos || 0) + r.fora.pontos * mult),
+    jogos: Math.max(0, Number(timeFora.jogos || 0) + r.fora.jogos * mult),
+    vitorias: Math.max(0, Number(timeFora.vitorias || 0) + r.fora.vitorias * mult),
+    empates: Math.max(0, Number(timeFora.empates || 0) + r.fora.empates * mult),
+    derrotas: Math.max(0, Number(timeFora.derrotas || 0) + r.fora.derrotas * mult),
+    gols_pro: Math.max(0, Number(timeFora.gols_pro || 0) + r.fora.gols_pro * mult),
+    gols_contra: Math.max(0, Number(timeFora.gols_contra || 0) + r.fora.gols_contra * mult),
+    saldo: Number(timeFora.saldo || 0) + r.fora.saldo * mult
+  };
+
+  const casaUpdate = await supabaseClient.from("times").update(novoCasa).eq("id", timeCasa.id);
+  if(casaUpdate.error){
+    alert("Erro ao atualizar time da casa");
+    console.log(casaUpdate.error);
+    return false;
+  }
+
+  const foraUpdate = await supabaseClient.from("times").update(novoFora).eq("id", timeFora.id);
+  if(foraUpdate.error){
+    alert("Erro ao atualizar time visitante");
+    console.log(foraUpdate.error);
+    return false;
+  }
+
+  return true;
+}
+
+async function computarJogo(jogoId){
+  const { data:jogo, error } = await supabaseClient
     .from("jogos")
     .select("*")
     .eq("id", jogoId)
     .single();
 
-  if(erroJogo){
+  if(error){
     alert("Erro ao buscar jogo");
-    console.log(erroJogo);
+    console.log(error);
     return;
   }
 
   if(jogo.computado === true){
-    alert("Esse jogo já foi computado na tabela.");
+    alert("Esse jogo já foi computado. Para mudar o placar, clique em Descomputar primeiro.");
     return;
   }
 
-  const { data:times, error:erroTimes } = await supabaseClient
-    .from("times")
-    .select("*")
-    .in("nome", [jogo.time_casa, jogo.time_fora]);
+  const ok = await alterarTabelaPorJogo(jogo, "somar");
+  if(!ok) return;
 
-  if(erroTimes){
-    alert("Erro ao buscar times");
-    console.log(erroTimes);
-    return;
-  }
-
-  const casa = times.find(t => t.nome === jogo.time_casa);
-  const fora = times.find(t => t.nome === jogo.time_fora);
-
-  if(!casa || !fora){
-    alert("Erro: nome dos times não bate com a tabela times.");
-    console.log(jogo.time_casa, jogo.time_fora, times);
-    return;
-  }
-
-  const pc = Number(jogo.placar_casa || 0);
-  const pf = Number(jogo.placar_fora || 0);
-
-  let pontosCasa = 0;
-  let pontosFora = 0;
-  let vitoriaCasa = 0;
-  let vitoriaFora = 0;
-  let empateCasa = 0;
-  let empateFora = 0;
-  let derrotaCasa = 0;
-  let derrotaFora = 0;
-
-  if(pc > pf){
-    pontosCasa = 3;
-    vitoriaCasa = 1;
-    derrotaFora = 1;
-  } else if(pc < pf){
-    pontosFora = 3;
-    vitoriaFora = 1;
-    derrotaCasa = 1;
-  } else {
-    pontosCasa = 1;
-    pontosFora = 1;
-    empateCasa = 1;
-    empateFora = 1;
-  }
-
-  const atualizarCasa = await supabaseClient
-    .from("times")
-    .update({
-      pontos: Number(casa.pontos || 0) + pontosCasa,
-      jogos: Number(casa.jogos || 0) + 1,
-      vitorias: Number(casa.vitorias || 0) + vitoriaCasa,
-      empates: Number(casa.empates || 0) + empateCasa,
-      derrotas: Number(casa.derrotas || 0) + derrotaCasa,
-      gols_pro: Number(casa.gols_pro || 0) + pc,
-      gols_contra: Number(casa.gols_contra || 0) + pf,
-      saldo: Number(casa.saldo || 0) + pc - pf
-    })
-    .eq("id", casa.id);
-
-  if(atualizarCasa.error){
-    alert("Erro ao atualizar time da casa");
-    console.log(atualizarCasa.error);
-    return;
-  }
-
-  const atualizarFora = await supabaseClient
-    .from("times")
-    .update({
-      pontos: Number(fora.pontos || 0) + pontosFora,
-      jogos: Number(fora.jogos || 0) + 1,
-      vitorias: Number(fora.vitorias || 0) + vitoriaFora,
-      empates: Number(fora.empates || 0) + empateFora,
-      derrotas: Number(fora.derrotas || 0) + derrotaFora,
-      gols_pro: Number(fora.gols_pro || 0) + pf,
-      gols_contra: Number(fora.gols_contra || 0) + pc,
-      saldo: Number(fora.saldo || 0) + pf - pc
-    })
-    .eq("id", fora.id);
-
-  if(atualizarFora.error){
-    alert("Erro ao atualizar time visitante");
-    console.log(atualizarFora.error);
-    return;
-  }
-
-  const marcarComputado = await supabaseClient
+  const marcar = await supabaseClient
     .from("jogos")
-    .update({ computado: true })
+    .update({ computado:true })
     .eq("id", jogo.id);
 
-  if(marcarComputado.error){
-    alert("Tabela atualizada, mas erro ao marcar jogo como computado.");
-    console.log(marcarComputado.error);
+  if(marcar.error){
+    alert("Tabela atualizada, mas erro ao marcar como computado.");
+    console.log(marcar.error);
     return;
   }
 
-  alert("Tabela atualizada automaticamente!");
+  alert("Jogo computado na tabela!");
+}
+
+async function descomputarJogo(id){
+  if(!confirm("Tem certeza que deseja descomputar esse jogo da tabela?")) return;
+
+  const { data:jogo, error } = await supabaseClient
+    .from("jogos")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if(error){
+    alert("Erro ao buscar jogo");
+    console.log(error);
+    return;
+  }
+
+  if(jogo.computado !== true){
+    alert("Esse jogo ainda não está computado.");
+    return;
+  }
+
+  const ok = await alterarTabelaPorJogo(jogo, "subtrair");
+  if(!ok) return;
+
+  const marcar = await supabaseClient
+    .from("jogos")
+    .update({ computado:false })
+    .eq("id", jogo.id);
+
+  if(marcar.error){
+    alert("Tabela descomputada, mas erro ao marcar como não computado.");
+    console.log(marcar.error);
+    return;
+  }
+
+  alert("Jogo descomputado! Agora você pode editar o placar e salvar de novo.");
+  carregarJogosAdmin();
+  carregarTimes();
+}
+
+function descomputarJogoAtual(){
+  const id = document.getElementById("jogoId").value;
+  if(!id){
+    alert("Escolha um jogo cadastrado primeiro.");
+    return;
+  }
+  descomputarJogo(id);
+}
+
+async function recalcularTabela(){
+  if(!confirm("Isso vai zerar a tabela dos times e recalcular usando todos os jogos encerrados. Continuar?")) return;
+
+  const { data:times } = await supabaseClient.from("times").select("*");
+
+  for(const time of times){
+    await supabaseClient.from("times").update({
+      pontos:0,jogos:0,vitorias:0,empates:0,derrotas:0,gols_pro:0,gols_contra:0,saldo:0
+    }).eq("id", time.id);
+  }
+
+  await supabaseClient.from("jogos").update({ computado:false }).neq("id", 0);
+
+  const { data:jogos } = await supabaseClient
+    .from("jogos")
+    .select("*")
+    .eq("status", "Encerrado")
+    .order("rodada", { ascending:true });
+
+  for(const jogo of jogos){
+    await alterarTabelaPorJogo(jogo, "somar");
+    await supabaseClient.from("jogos").update({ computado:true }).eq("id", jogo.id);
+  }
+
+  alert("Tabela recalculada!");
+  carregarJogosAdmin();
+  carregarTimes();
 }
 
 async function carregarJogosAdmin(){
@@ -355,38 +551,39 @@ async function carregarJogosAdmin(){
 
   data.forEach(jogo => {
     lista.innerHTML += `
-      <div class="jogo-item">
-        <strong>
-          ${jogo.rodada}ª Rodada - 
-          ${jogo.time_casa} ${jogo.placar_casa} x ${jogo.placar_fora} ${jogo.time_fora}
-        </strong>
-
+      <div class="item">
+        <strong>${jogo.rodada}ª Rodada - ${jogo.time_casa} ${jogo.placar_casa} x ${jogo.placar_fora} ${jogo.time_fora}</strong>
         <div>${jogo.data_jogo || ""} • ${jogo.hora_jogo || ""}</div>
         <div>${jogo.local || ""}</div>
         <div>Status: ${jogo.status}</div>
         <div>Computado: ${jogo.computado ? "Sim" : "Não"}</div>
-
-        <button onclick='editarJogo(${JSON.stringify(jogo)})'>
-          Editar jogo
-        </button>
+        <button onclick='editarJogo(${JSON.stringify(jogo)})'>Editar jogo</button>
+        <button class="warning" onclick="descomputarJogo(${jogo.id})">Descomputar</button>
       </div>
     `;
   });
 }
 
 function editarJogo(jogo){
+  abrirAba("abaJogos");
+
   document.getElementById("jogoId").value = jogo.id;
   document.getElementById("timeCasa").value = jogo.time_casa;
   document.getElementById("timeFora").value = jogo.time_fora;
-  document.getElementById("rodada").value = jogo.rodada;
+  document.getElementById("rodada").value = jogo.rodada || "";
   document.getElementById("local").value = jogo.local || "";
   document.getElementById("data_jogo").value = jogo.data_jogo || "";
   document.getElementById("hora_jogo").value = jogo.hora_jogo || "";
   document.getElementById("placar_casa").value = jogo.placar_casa || 0;
   document.getElementById("placar_fora").value = jogo.placar_fora || 0;
-  document.getElementById("status").value = jogo.status;
+  document.getElementById("status").value = jogo.status || "Agendado";
+  document.getElementById("capacidade").value = jogo.capacidade || "";
+  document.getElementById("foto_estadio").value = jogo.foto_estadio || "";
+  document.getElementById("gols_casa").value = jogo.gols_casa || "";
+  document.getElementById("gols_fora").value = jogo.gols_fora || "";
+  document.getElementById("estatisticas").value = jogo.estatisticas || "";
 
-  window.scrollTo({ top:0, behavior:"smooth" });
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function limparFormularioJogo(){
@@ -398,10 +595,104 @@ function limparFormularioJogo(){
   document.getElementById("placar_casa").value = "";
   document.getElementById("placar_fora").value = "";
   document.getElementById("status").value = "Agendado";
+  document.getElementById("capacidade").value = "";
+  document.getElementById("foto_estadio").value = "";
+  document.getElementById("gols_casa").value = "";
+  document.getElementById("gols_fora").value = "";
+  document.getElementById("estatisticas").value = "";
+}
+
+async function carregarJogadores(){
+  const lista = document.getElementById("listaJogadores");
+
+  const { data, error } = await supabaseClient
+    .from("jogadores")
+    .select("*")
+    .order("nome", { ascending:true });
+
+  if(error){
+    lista.innerHTML = "Crie a tabela jogadores no Supabase para usar essa área.";
+    console.log(error);
+    return;
+  }
+
+  lista.innerHTML = "";
+
+  data.forEach(j => {
+    lista.innerHTML += `
+      <div class="item">
+        <strong>${j.nome} - ${j.time}</strong>
+        <div>${j.posicao || ""} • Nº ${j.numero || ""}</div>
+        <div>Gols: ${j.gols || 0} | Assistências: ${j.assistencias || 0}</div>
+        <div>Amarelos: ${j.cartoes_amarelos || 0} | Vermelhos: ${j.cartoes_vermelhos || 0}</div>
+        <button onclick='editarJogador(${JSON.stringify(j)})'>Editar jogador</button>
+      </div>
+    `;
+  });
+}
+
+async function salvarJogador(){
+  const id = document.getElementById("jogadorId").value;
+
+  const jogador = {
+    nome: document.getElementById("nomeJogador").value,
+    time: document.getElementById("timeJogador").value,
+    posicao: document.getElementById("posicaoJogador").value,
+    numero: Number(document.getElementById("numeroJogador").value || 0),
+    gols: Number(document.getElementById("golsJogador").value || 0),
+    assistencias: Number(document.getElementById("assistenciasJogador").value || 0),
+    cartoes_amarelos: Number(document.getElementById("amarelosJogador").value || 0),
+    cartoes_vermelhos: Number(document.getElementById("vermelhosJogador").value || 0)
+  };
+
+  let error;
+
+  if(id){
+    const r = await supabaseClient.from("jogadores").update(jogador).eq("id", id);
+    error = r.error;
+  } else {
+    const r = await supabaseClient.from("jogadores").insert([jogador]);
+    error = r.error;
+  }
+
+  if(error){
+    alert("Erro ao salvar jogador. Confirme se a tabela jogadores existe.");
+    console.log(error);
+    return;
+  }
+
+  alert("Jogador salvo!");
+  limparJogador();
+  carregarJogadores();
+}
+
+function editarJogador(j){
+  document.getElementById("jogadorId").value = j.id;
+  document.getElementById("nomeJogador").value = j.nome || "";
+  document.getElementById("timeJogador").value = j.time || "";
+  document.getElementById("posicaoJogador").value = j.posicao || "";
+  document.getElementById("numeroJogador").value = j.numero || 0;
+  document.getElementById("golsJogador").value = j.gols || 0;
+  document.getElementById("assistenciasJogador").value = j.assistencias || 0;
+  document.getElementById("amarelosJogador").value = j.cartoes_amarelos || 0;
+  document.getElementById("vermelhosJogador").value = j.cartoes_vermelhos || 0;
+  abrirAba("abaJogadores");
+}
+
+function limparJogador(){
+  document.getElementById("jogadorId").value = "";
+  document.getElementById("nomeJogador").value = "";
+  document.getElementById("posicaoJogador").value = "";
+  document.getElementById("numeroJogador").value = "";
+  document.getElementById("golsJogador").value = "";
+  document.getElementById("assistenciasJogador").value = "";
+  document.getElementById("amarelosJogador").value = "";
+  document.getElementById("vermelhosJogador").value = "";
 }
 
 carregarTimes();
 carregarJogosAdmin();
+carregarJogadores();
 </script>
 
 </body>
