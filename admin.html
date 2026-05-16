@@ -253,6 +253,10 @@ function dadosJogo(){
   };
 }
 
+
+
+
+
 async function salvarJogo(){
   const id=document.getElementById("jogoId").value;
   const jogo=dadosJogo();
@@ -297,6 +301,10 @@ function resultado(jogo){
 
   return{casa,fora};
 }
+
+
+
+
 
 async function alterarTabela(jogo,modo){
   const {data:times,error}=await supabaseClient.from("times").select("*").in("nome",[jogo.time_casa,jogo.time_fora]);
@@ -494,8 +502,6 @@ async function carregarJogadoresDoTime(){
   });
 }
 
-<script>
-
 async function salvarGol(){
 
   const jogoId = Number(
@@ -544,7 +550,7 @@ async function salvarGol(){
 
 }
 
-</script>}
+
 
 async function carregarGolsDoJogo(){
   const jogoId=document.getElementById("jogoGol").value;
@@ -568,6 +574,9 @@ async function carregarGolsDoJogo(){
   });
 }
 
+
+
+
 async function excluirGol(id){
   if(!confirm("Excluir esse gol?"))return;
 
@@ -577,6 +586,9 @@ async function excluirGol(id){
   notificar("Gol excluído!");
   carregarGolsDoJogo();
 }
+
+
+
 
 async function salvarJogador(){
   const id=document.getElementById("jogadorId").value;
@@ -590,6 +602,8 @@ async function salvarJogador(){
     cartoes_amarelos:Number(document.getElementById("amarelosJogador").value||0),
     cartoes_vermelhos:Number(document.getElementById("vermelhosJogador").value||0)
   };
+
+
 
   let r;
 
