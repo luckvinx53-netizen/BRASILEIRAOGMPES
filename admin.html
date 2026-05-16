@@ -494,22 +494,57 @@ async function carregarJogadoresDoTime(){
   });
 }
 
+<script>
+
 async function salvarGol(){
-  const gol={
-    jogo_id:Number(document.getElementById("jogoGol").value),
-    time:document.getElementById("timeGol").value,
-    jogador:document.getElementById("jogadorGol").value,
-    minuto:document.getElementById("minutoGol").value,
-    tipo:document.getElementById("tipoGol").value
+
+  const jogoId = Number(
+    document.getElementById("jogoGol").value
+  );
+
+  const jogoSelecionado = jogosCache.find(
+    j => Number(j.id) === jogoId
+  );
+
+  const gol = {
+
+    jogo_id: jogoId,
+
+    jogo: jogoSelecionado
+      ? `${jogoSelecionado.time_casa} x ${jogoSelecionado.time_fora}`
+      : "",
+
+    time: document.getElementById("timeGol").value,
+
+    jogador: document.getElementById("jogadorGol").value,
+
+    minuto: document.getElementById("minutoGol").value,
+
+    tipo: document.getElementById("tipoGol").value
+
   };
 
-  const {error}=await supabaseClient.from("gols_jogo").insert([gol]);
-  if(error){notificar(error.message,"erro");return;}
+  const { error } = await supabaseClient
+    .from("gols_jogo")
+    .insert([gol]);
 
-  document.getElementById("minutoGol").value="";
+  if(error){
+
+    notificar(error.message,"erro");
+    console.log(error);
+    return;
+
+  }
+
+  document.getElementById("minutoGol").value = "";
+
   notificar("Gol salvo!");
+
   carregarGolsDoJogo();
+
 }
+
+</script>}
 
 async function carregarGolsDoJogo(){
   const jogoId=document.getElementById("jogoGol").value;
